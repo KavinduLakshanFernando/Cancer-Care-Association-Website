@@ -19,6 +19,7 @@ import {
   MapPin,
   HeartHandshake,
   BookOpen,
+  Globe,
 } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -30,6 +31,29 @@ export default function Header() {
   const [copiedBank, setCopiedBank] = useState(false);
   const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const leaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    if (leaveTimeoutRef.current) {
+      clearTimeout(leaveTimeoutRef.current);
+      leaveTimeoutRef.current = null;
+    }
+    setHospiceDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    leaveTimeoutRef.current = setTimeout(() => {
+      setHospiceDropdownOpen(false);
+    }, 180);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (leaveTimeoutRef.current) {
+        clearTimeout(leaveTimeoutRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,334 +93,471 @@ Helpline: +94 77 340 9787`;
 
   return (
     <>
-      {/* Top Bar - ipm.lk style */}
-      <div className="top-bar-ipm py-2 px-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4 text-xs font-medium">
-            <div className="flex items-center gap-1.5">
-              <Phone className="w-3.5 h-3.5 text-amber-400" />
-              <span className="text-slate-300">24/7 Care Helpline:</span>
+      {/* Slim Info/Notice Bar */}
+      <div className="bg-[#F0F7FD] text-[#1E3A5F] text-xs py-1.5 px-4 border-b border-[#E1F0FD] hidden md:block">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-4 text-[11px]">
+            <div className="flex items-center gap-1.5 font-medium">
+              <Phone className="w-3.5 h-3.5 text-[#0B63CE]" />
+              <span className="text-slate-600">24/7 Care Helpline:</span>
               <a
                 href={`tel:${siteConfig.contact.headOffice.mobile.replace(/\s+/g, "")}`}
-                className="text-white hover:text-amber-300 font-bold transition-colors"
+                className="text-[#0B63CE] hover:underline font-bold"
               >
                 {siteConfig.contact.headOffice.mobile}
               </a>
             </div>
-
-            <div className="hidden md:flex items-center gap-1.5 text-slate-300">
-              <MapPin className="w-3.5 h-3.5 text-teal-400" />
-              <span>Anuradhapura &amp; Galle, Sri Lanka</span>
+            <span className="text-slate-300">•</span>
+            <div className="flex items-center gap-1.5 text-slate-600">
+              <MapPin className="w-3.5 h-3.5 text-teal-600" />
+              <span>Anuradhapura &amp; Galle Hospices, Sri Lanka</span>
             </div>
-
-            <div className="hidden lg:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 text-[11px] font-bold border border-amber-500/30">
-              <Heart className="w-3 h-3 fill-amber-300" />
-              <span>100% Free Care</span>
+            <span className="text-slate-300">•</span>
+            <div className="inline-flex items-center gap-1 text-[#0B63CE] font-bold">
+              <Heart className="w-2.5 h-2.5 fill-[#0B63CE]" />
+              <span>100% Free Cancer &amp; Palliative Care</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-3 text-[11px]">
             <button
               type="button"
               onClick={copyBankInfo}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-semibold bg-white/10 hover:bg-white/20 text-slate-200 transition-colors cursor-pointer border border-white/10"
-              title="Copy Main Bank Account Information"
+              className="inline-flex items-center gap-1 text-slate-600 hover:text-[#0B63CE] transition-colors cursor-pointer font-medium"
             >
               {copiedBank ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-300 font-bold">Copied!</span>
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="text-emerald-700 font-bold">Bank Info Copied!</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5 text-amber-300" />
-                  <span>Copy Bank Info</span>
+                  <Copy className="w-3.5 h-3.5 text-[#0B63CE]" />
+                  <span>Copy Bank Details</span>
                 </>
               )}
             </button>
-
-            <Link
-              href="/donate"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-md text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 transition-colors shadow-sm"
-            >
-              <Heart className="w-3 h-3 fill-white" />
-              <span>Donate</span>
-            </Link>
           </div>
         </div>
       </div>
 
-      {/* Main Navbar - ipm.lk clean institutional style */}
+      {/* Main Navbar - Embossed Capsule & Beveled Lighting (Matching Reference Image) */}
       <header
         className={cn(
-          "sticky top-0 z-40 w-full transition-all duration-300 bg-white border-b",
-          isScrolled ? "shadow-md border-slate-200 py-2.5" : "border-slate-100 py-3.5"
+          "sticky top-0 z-50 w-full transition-all duration-300 bg-white/92 backdrop-blur-md border-b",
+          isScrolled
+            ? "py-2.5 shadow-[0_4px_22px_-2px_rgba(11,99,206,0.09),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(226,238,249,0.9)] border-[#DCEAF8]"
+            : "py-3.5 shadow-[0_2px_12px_-2px_rgba(11,99,206,0.05),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(235,244,251,0.8)] border-[#E2EEF9]"
         )}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Logo with Emblem & Institutional Subtitle */}
-          <Link href="/" className="flex items-center gap-3 group focus:outline-none">
-            <div className="w-11 h-11 rounded-xl bg-[#092B4C] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-200">
-              <Heart className="w-6 h-6 text-amber-400 fill-amber-400/20" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-6">
+          {/* Logo (Left - exactly like reference image) */}
+          <Link href="/" className="flex items-center gap-3 group focus:outline-none shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#0B63CE] to-[#1E88E5] flex items-center justify-center text-white shadow-[0_4px_12px_rgba(11,99,206,0.28),inset_0_1px_0_rgba(255,255,255,0.4)] group-hover:scale-105 transition-transform duration-200">
+              <Heart className="w-5 h-5 fill-white text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="font-extrabold text-lg sm:text-xl tracking-tight text-[#092B4C] leading-none">
-                CCA SRI LANKA
+              <span className="font-extrabold text-lg tracking-tight text-[#0D3862] leading-none">
+                Cancer Care
               </span>
-              <span className="text-[11px] font-semibold text-teal-700 tracking-wide mt-1 uppercase">
-                Cancer Care Association • Approved Charity
+              <span className="text-[11px] font-semibold text-[#0B63CE] tracking-normal mt-0.5">
+                Hope for a Brighter Tomorrow
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+          {/* Desktop Navigation Links (Center - Embossed Pill Capsule like Dartcodes Reference) */}
+          <nav className="hidden lg:flex items-center gap-1 bg-[#F1F6FB] border border-[#DCEAF8] p-1.5 rounded-full shadow-[inset_0_2px_4px_rgba(11,99,206,0.05),0_1px_0_rgba(255,255,255,0.9)]">
+            {/* Home */}
             <Link
               href="/"
               className={cn(
-                "relative px-3.5 py-2 text-sm font-bold transition-colors",
+                "relative px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 select-none",
                 pathname === "/"
-                  ? "text-[#1261A0]"
-                  : "text-slate-700 hover:text-[#1261A0]"
+                  ? "bg-white text-[#0B63CE] font-bold shadow-[0_2px_8px_rgba(11,99,206,0.12),0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)] border border-[#CDE3F7]"
+                  : "text-[#1E3A5F] hover:text-[#0B63CE] hover:bg-white/70"
               )}
             >
               Home
-              {pathname === "/" && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#1261A0] rounded-full" />
-              )}
             </Link>
 
+            {/* About */}
             <Link
               href="/about"
               className={cn(
-                "relative px-3.5 py-2 text-sm font-bold transition-colors",
+                "relative px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 select-none",
                 pathname === "/about"
-                  ? "text-[#1261A0]"
-                  : "text-slate-700 hover:text-[#1261A0]"
+                  ? "bg-white text-[#0B63CE] font-bold shadow-[0_2px_8px_rgba(11,99,206,0.12),0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)] border border-[#CDE3F7]"
+                  : "text-[#1E3A5F] hover:text-[#0B63CE] hover:bg-white/70"
               )}
             >
               About
-              {pathname === "/about" && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#1261A0] rounded-full" />
+            </Link>
+
+            {/* Services */}
+            <Link
+              href="/what-we-do"
+              className={cn(
+                "relative px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 select-none",
+                pathname === "/what-we-do"
+                  ? "bg-white text-[#0B63CE] font-bold shadow-[0_2px_8px_rgba(11,99,206,0.12),0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)] border border-[#CDE3F7]"
+                  : "text-[#1E3A5F] hover:text-[#0B63CE] hover:bg-white/70"
               )}
+            >
+              Services
             </Link>
 
             {/* Hospices Dropdown */}
             <div
               className="relative"
               ref={dropdownRef}
-              onMouseEnter={() => setHospiceDropdownOpen(true)}
-              onMouseLeave={() => setHospiceDropdownOpen(false)}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               <button
                 type="button"
+                onClick={() => {
+                  if (leaveTimeoutRef.current) clearTimeout(leaveTimeoutRef.current);
+                  setHospiceDropdownOpen((prev) => !prev);
+                }}
                 className={cn(
-                  "relative px-3.5 py-2 text-sm font-bold flex items-center gap-1 transition-colors focus:outline-none cursor-pointer",
-                  isHospiceActive
-                    ? "text-[#1261A0]"
-                    : "text-slate-700 hover:text-[#1261A0]"
+                  "relative flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 cursor-pointer select-none",
+                  isHospiceActive || hospiceDropdownOpen
+                    ? "bg-white text-[#0B63CE] font-bold shadow-[0_2px_8px_rgba(11,99,206,0.12),0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)] border border-[#CDE3F7]"
+                    : "text-[#1E3A5F] hover:text-[#0B63CE] hover:bg-white/70"
                 )}
                 aria-expanded={hospiceDropdownOpen}
-                onClick={() => setHospiceDropdownOpen((prev) => !prev)}
+                aria-haspopup="true"
               >
                 <span>Hospices</span>
                 <ChevronDown
                   className={cn(
-                    "w-4 h-4 transition-transform duration-200",
-                    hospiceDropdownOpen ? "rotate-180 text-[#1261A0]" : "text-slate-400"
+                    "w-3.5 h-3.5 transition-transform duration-200",
+                    hospiceDropdownOpen ? "rotate-180 text-[#0B63CE]" : "text-slate-400"
                   )}
                 />
-                {isHospiceActive && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#1261A0] rounded-full" />
-                )}
               </button>
 
               {hospiceDropdownOpen && (
-                <div className="absolute left-0 mt-1 w-80 rounded-2xl bg-white shadow-xl border border-slate-100 p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  <Link
-                    href="/hospices"
-                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors group"
-                  >
-                    <div className="p-2 rounded-lg bg-blue-50 text-[#1261A0] group-hover:bg-[#1261A0] group-hover:text-white transition-colors">
-                      <Building className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-[#092B4C] group-hover:text-[#1261A0]">
-                        Hospices &amp; Facilities
-                      </div>
-                      <p className="text-xs text-slate-500 mt-0.5">
-                        Overview of inpatient and transit shelters.
-                      </p>
-                    </div>
-                  </Link>
+                <div
+                  className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-84 z-50 animate-in fade-in slide-in-from-top-1 duration-150"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  {/* Invisible hit-box bridge between button and dropdown */}
+                  <div className="absolute -top-3 left-0 right-0 h-5 bg-transparent pointer-events-auto" />
 
-                  <div className="h-px bg-slate-100 my-1" />
+                  <div className="rounded-2xl bg-white/98 backdrop-blur-md border border-[#DCEAF8] p-2.5 shadow-[0_12px_36px_-6px_rgba(11,99,206,0.16),0_4px_12px_-2px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,1)] divide-y divide-slate-100">
+                    <div className="space-y-1">
+                      <Link
+                        href="/hospices"
+                        onClick={() => setHospiceDropdownOpen(false)}
+                        className={cn(
+                          "flex items-start gap-3 p-2.5 rounded-xl transition-all group",
+                          pathname === "/hospices"
+                            ? "bg-[#EBF5FF] text-[#0B63CE] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] border border-[#CDE3F7]"
+                            : "hover:bg-[#F0F7FD] text-[#0D3862]"
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            "p-2 rounded-lg transition-colors shrink-0",
+                            pathname === "/hospices"
+                              ? "bg-[#0B63CE] text-white shadow-xs"
+                              : "bg-[#EBF5FF] text-[#0B63CE] group-hover:bg-[#0B63CE] group-hover:text-white"
+                          )}
+                        >
+                          <Building className="w-4 h-4" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <span
+                              className={cn(
+                                "text-sm font-bold transition-colors",
+                                pathname === "/hospices" ? "text-[#0B63CE]" : "group-hover:text-[#0B63CE]"
+                              )}
+                            >
+                              Hospices &amp; Facilities
+                            </span>
+                            {pathname === "/hospices" && (
+                              <span className="text-[10px] font-bold text-[#0B63CE] bg-blue-100 px-1.5 py-0.5 rounded">
+                                Current
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-slate-500 mt-0.5">
+                            Overview of inpatient and transit shelters.
+                          </p>
+                        </div>
+                      </Link>
 
-                  <Link
-                    href="/hospices/anuradhapura"
-                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors group"
-                  >
-                    <div className="p-2 rounded-lg bg-teal-50 text-teal-700 group-hover:bg-teal-700 group-hover:text-white transition-colors">
-                      <HomeIcon className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-[#092B4C] group-hover:text-teal-700 flex items-center gap-1.5">
-                        <span>Anuradhapura Hospice</span>
-                        <span className="text-[10px] bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded font-bold">
-                          45 Beds
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-500 mt-0.5">
-                        WHO-recognized residential palliative sanctuary.
-                      </p>
-                    </div>
-                  </Link>
+                      <Link
+                        href="/hospices/anuradhapura"
+                        onClick={() => setHospiceDropdownOpen(false)}
+                        className={cn(
+                          "flex items-start gap-3 p-2.5 rounded-xl transition-all group",
+                          pathname === "/hospices/anuradhapura"
+                            ? "bg-[#EBF5FF] text-[#0B63CE] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] border border-[#CDE3F7]"
+                            : "hover:bg-[#F0F7FD] text-[#0D3862]"
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            "p-2 rounded-lg transition-colors shrink-0",
+                            pathname === "/hospices/anuradhapura"
+                              ? "bg-[#0B63CE] text-white shadow-xs"
+                              : "bg-[#EBF5FF] text-[#0B63CE] group-hover:bg-[#0B63CE] group-hover:text-white"
+                          )}
+                        >
+                          <HomeIcon className="w-4 h-4" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-1.5">
+                            <span
+                              className={cn(
+                                "text-sm font-bold transition-colors",
+                                pathname === "/hospices/anuradhapura"
+                                  ? "text-[#0B63CE]"
+                                  : "group-hover:text-[#0B63CE]"
+                              )}
+                            >
+                              Anuradhapura Hospice
+                            </span>
+                            <span className="text-[10px] bg-[#E1F0FD] text-[#0B63CE] border border-[#BCE1FD] px-1.5 py-0.5 rounded font-bold shrink-0">
+                              45 Beds
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-500 mt-0.5">
+                            WHO-recognized residential palliative sanctuary.
+                          </p>
+                        </div>
+                      </Link>
 
-                  <Link
-                    href="/hospices/saku-nikethana-karapitiya"
-                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors group"
-                  >
-                    <div className="p-2 rounded-lg bg-amber-50 text-amber-700 group-hover:bg-amber-700 group-hover:text-white transition-colors">
-                      <Activity className="w-4 h-4" />
+                      <Link
+                        href="/hospices/saku-nikethana-karapitiya"
+                        onClick={() => setHospiceDropdownOpen(false)}
+                        className={cn(
+                          "flex items-start gap-3 p-2.5 rounded-xl transition-all group",
+                          pathname === "/hospices/saku-nikethana-karapitiya"
+                            ? "bg-amber-50 text-amber-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] border border-amber-200"
+                            : "hover:bg-[#F0F7FD] text-[#0D3862]"
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            "p-2 rounded-lg transition-colors shrink-0",
+                            pathname === "/hospices/saku-nikethana-karapitiya"
+                              ? "bg-amber-500 text-white shadow-xs"
+                              : "bg-amber-50 text-amber-600 group-hover:bg-amber-500 group-hover:text-white"
+                          )}
+                        >
+                          <Activity className="w-4 h-4" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-1.5">
+                            <span
+                              className={cn(
+                                "text-sm font-bold transition-colors",
+                                pathname === "/hospices/saku-nikethana-karapitiya"
+                                  ? "text-amber-700"
+                                  : "group-hover:text-amber-700"
+                              )}
+                            >
+                              Saku Nikethana Karapitiya
+                            </span>
+                            <span className="text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-bold shrink-0">
+                              Galle
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-500 mt-0.5">
+                            Galle outpatient transit shelter and rest refuge.
+                          </p>
+                        </div>
+                      </Link>
                     </div>
-                    <div>
-                      <div className="text-sm font-bold text-[#092B4C] group-hover:text-amber-700">
-                        Saku Nikethana Karapitiya
-                      </div>
-                      <p className="text-xs text-slate-500 mt-0.5">
-                        Galle outpatient transit shelter and rest refuge.
-                      </p>
-                    </div>
-                  </Link>
+                  </div>
                 </div>
               )}
             </div>
 
+            {/* Home Care */}
             <Link
               href="/home-based-palliative-care"
               className={cn(
-                "relative px-3.5 py-2 text-sm font-bold transition-colors",
+                "relative px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 select-none",
                 pathname === "/home-based-palliative-care"
-                  ? "text-[#1261A0]"
-                  : "text-slate-700 hover:text-[#1261A0]"
+                  ? "bg-white text-[#0B63CE] font-bold shadow-[0_2px_8px_rgba(11,99,206,0.12),0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)] border border-[#CDE3F7]"
+                  : "text-[#1E3A5F] hover:text-[#0B63CE] hover:bg-white/70"
               )}
             >
               Home Care
-              {pathname === "/home-based-palliative-care" && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#1261A0] rounded-full" />
-              )}
             </Link>
 
-            <Link
-              href="/what-we-do"
-              className={cn(
-                "relative px-3.5 py-2 text-sm font-bold transition-colors",
-                pathname === "/what-we-do"
-                  ? "text-[#1261A0]"
-                  : "text-slate-700 hover:text-[#1261A0]"
-              )}
-            >
-              Services &amp; Projects
-              {pathname === "/what-we-do" && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#1261A0] rounded-full" />
-              )}
-            </Link>
-
-            <Link
-              href="/donate"
-              className={cn(
-                "relative px-3.5 py-2 text-sm font-bold transition-colors",
-                pathname === "/donate"
-                  ? "text-[#1261A0]"
-                  : "text-slate-700 hover:text-[#1261A0]"
-              )}
-            >
-              Support Us
-              {pathname === "/donate" && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#1261A0] rounded-full" />
-              )}
-            </Link>
-
+            {/* Contact */}
             <Link
               href="/contact"
               className={cn(
-                "relative px-3.5 py-2 text-sm font-bold transition-colors",
+                "relative px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 select-none",
                 pathname === "/contact"
-                  ? "text-[#1261A0]"
-                  : "text-slate-700 hover:text-[#1261A0]"
+                  ? "bg-white text-[#0B63CE] font-bold shadow-[0_2px_8px_rgba(11,99,206,0.12),0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)] border border-[#CDE3F7]"
+                  : "text-[#1E3A5F] hover:text-[#0B63CE] hover:bg-white/70"
               )}
             >
-              Contact Us
-              {pathname === "/contact" && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#1261A0] rounded-full" />
-              )}
+              Contact
             </Link>
           </nav>
 
-          {/* Action Button & Hamburger Toggle */}
-          <div className="flex items-center gap-3">
+          {/* Right Action Group - Donate pill + Quick Helpline */}
+          <div className="flex items-center gap-3 shrink-0">
+            {/* Donate Solid Blue Pill Button with Embossed Shadow */}
             <Link
               href="/donate"
-              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm text-white bg-[#092B4C] hover:bg-[#1261A0] transition-colors shadow-sm"
+              className="inline-flex items-center justify-center px-6 py-2.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-[#0B63CE] to-[#1474E8] hover:from-[#0952AC] hover:to-[#0B63CE] transition-all duration-200 shadow-[0_4px_14px_rgba(11,99,206,0.32),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_6px_20px_rgba(11,99,206,0.45)] hover:scale-[1.02] active:scale-[0.98]"
             >
-              <Heart className="w-4 h-4 text-amber-400 fill-amber-400" />
-              <span>Support Us</span>
+              <span>Donate</span>
             </Link>
 
+            {/* Helpline Circular Icon Button with Embossed Bevel */}
+            <a
+              href={`tel:${siteConfig.contact.headOffice.mobile.replace(/\s+/g, "")}`}
+              className="w-10 h-10 rounded-full bg-[#F1F6FB] border border-[#DCEAF8] text-[#1E3A5F] hover:text-[#0B63CE] hover:bg-white shadow-[inset_0_1px_1px_rgba(0,0,0,0.04),0_1px_2px_rgba(255,255,255,0.9)] flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+              title={`Call 24/7 Care Helpline: ${siteConfig.contact.headOffice.mobile}`}
+              aria-label="24/7 Helpline"
+            >
+              <Phone className="w-4 h-4" />
+            </a>
+
+            {/* Mobile Hamburger Menu Toggle */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-              className="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
+              className="lg:hidden p-2 rounded-lg text-[#1E3A5F] hover:bg-slate-100 transition-colors"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6 text-[#1E3A5F]" />}
             </button>
           </div>
         </div>
 
         {/* Mobile Slide-down Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden fixed inset-x-0 top-[96px] bg-white border-b border-slate-200 shadow-2xl max-h-[calc(100vh-96px)] overflow-y-auto px-5 py-6 space-y-4">
+          <div className="lg:hidden fixed inset-x-0 top-[72px] bg-white border-b border-slate-200 shadow-xl max-h-[calc(100vh-72px)] overflow-y-auto px-5 py-6 space-y-4">
             <div className="space-y-1">
               <Link
                 href="/"
-                className="block px-3 py-2.5 rounded-lg text-base font-bold text-[#092B4C] hover:bg-slate-50"
+                className={cn(
+                  "block px-4 py-2.5 rounded-xl text-base font-bold transition-colors",
+                  pathname === "/"
+                    ? "bg-[#EBF5FF] text-[#0B63CE]"
+                    : "text-[#0D3862] hover:bg-slate-50"
+                )}
               >
                 Home
               </Link>
               <Link
                 href="/about"
-                className="block px-3 py-2.5 rounded-lg text-base font-bold text-[#092B4C] hover:bg-slate-50"
+                className={cn(
+                  "block px-4 py-2.5 rounded-xl text-base font-bold transition-colors",
+                  pathname === "/about"
+                    ? "bg-[#EBF5FF] text-[#0B63CE]"
+                    : "text-[#0D3862] hover:bg-slate-50"
+                )}
               >
                 About
               </Link>
               <Link
-                href="/hospices"
-                className="block px-3 py-2.5 rounded-lg text-base font-bold text-[#092B4C] hover:bg-slate-50"
+                href="/what-we-do"
+                className={cn(
+                  "block px-4 py-2.5 rounded-xl text-base font-bold transition-colors",
+                  pathname === "/what-we-do"
+                    ? "bg-[#EBF5FF] text-[#0B63CE]"
+                    : "text-[#0D3862] hover:bg-slate-50"
+                )}
               >
-                Hospices &amp; Facilities
+                Services
               </Link>
+              {/* Hospices & Facilities with sub-tabs */}
+              <div className="space-y-1">
+                <Link
+                  href="/hospices"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    "flex items-center justify-between px-4 py-2.5 rounded-xl text-base font-bold transition-colors",
+                    pathname === "/hospices"
+                      ? "bg-[#EBF5FF] text-[#0B63CE]"
+                      : isHospiceActive
+                      ? "text-[#0B63CE] bg-blue-50/50"
+                      : "text-[#0D3862] hover:bg-slate-50"
+                  )}
+                >
+                  <span>Hospices &amp; Facilities</span>
+                  <ChevronDown className="w-4 h-4 text-slate-400" />
+                </Link>
+
+                <div className="pl-4 pr-1 py-1 space-y-1 border-l-2 border-blue-100 ml-4">
+                  <Link
+                    href="/hospices/anuradhapura"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      "flex items-center justify-between px-3 py-2 rounded-lg text-sm font-semibold transition-colors",
+                      pathname === "/hospices/anuradhapura"
+                        ? "bg-[#EBF5FF] text-[#0B63CE] font-bold"
+                        : "text-slate-600 hover:bg-slate-50"
+                    )}
+                  >
+                    <span>Anuradhapura Hospice</span>
+                    <span className="text-[10px] bg-blue-100 text-[#0B63CE] px-1.5 py-0.5 rounded font-bold">
+                      45 Beds
+                    </span>
+                  </Link>
+
+                  <Link
+                    href="/hospices/saku-nikethana-karapitiya"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      "flex items-center justify-between px-3 py-2 rounded-lg text-sm font-semibold transition-colors",
+                      pathname === "/hospices/saku-nikethana-karapitiya"
+                        ? "bg-amber-50 text-amber-800 font-bold"
+                        : "text-slate-600 hover:bg-slate-50"
+                    )}
+                  >
+                    <span>Saku Nikethana Karapitiya</span>
+                    <span className="text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-bold">
+                      Galle
+                    </span>
+                  </Link>
+                </div>
+              </div>
               <Link
                 href="/home-based-palliative-care"
-                className="block px-3 py-2.5 rounded-lg text-base font-bold text-[#092B4C] hover:bg-slate-50"
+                className={cn(
+                  "block px-4 py-2.5 rounded-xl text-base font-bold transition-colors",
+                  pathname === "/home-based-palliative-care"
+                    ? "bg-[#EBF5FF] text-[#0B63CE]"
+                    : "text-[#0D3862] hover:bg-slate-50"
+                )}
               >
                 Home-Based Palliative Care
               </Link>
               <Link
-                href="/what-we-do"
-                className="block px-3 py-2.5 rounded-lg text-base font-bold text-[#092B4C] hover:bg-slate-50"
-              >
-                Services &amp; Projects
-              </Link>
-              <Link
                 href="/donate"
-                className="block px-3 py-2.5 rounded-lg text-base font-bold text-[#092B4C] hover:bg-slate-50"
+                className={cn(
+                  "block px-4 py-2.5 rounded-xl text-base font-bold transition-colors",
+                  pathname === "/donate"
+                    ? "bg-[#EBF5FF] text-[#0B63CE]"
+                    : "text-[#0D3862] hover:bg-slate-50"
+                )}
               >
                 Support Us / Donate
               </Link>
               <Link
                 href="/contact"
-                className="block px-3 py-2.5 rounded-lg text-base font-bold text-[#092B4C] hover:bg-slate-50"
+                className={cn(
+                  "block px-4 py-2.5 rounded-xl text-base font-bold transition-colors",
+                  pathname === "/contact"
+                    ? "bg-[#EBF5FF] text-[#0B63CE]"
+                    : "text-[#0D3862] hover:bg-slate-50"
+                )}
               >
                 Contact Us
               </Link>
@@ -405,17 +566,20 @@ Helpline: +94 77 340 9787`;
             <div className="pt-4 border-t border-slate-100 space-y-3">
               <Link
                 href="/donate"
-                className="w-full py-3 rounded-xl text-center font-bold text-sm bg-amber-600 text-white flex items-center justify-center gap-2 shadow-sm"
+                className="w-full py-3 rounded-full text-center font-bold text-sm bg-[#0B63CE] text-white hover:bg-[#0952AC] flex items-center justify-center gap-2 shadow-sm"
               >
                 <Heart className="w-4 h-4 fill-white" />
                 <span>Donate &amp; Support Cancer Patients</span>
               </Link>
 
-              <div className="p-3 bg-slate-50 rounded-xl text-xs text-slate-600 flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-teal-600 shrink-0" />
+              <div className="p-3 bg-[#F0F7FD] border border-[#E1F0FD] rounded-xl text-xs text-slate-600 flex items-center gap-2.5">
+                <Phone className="w-4 h-4 text-[#0B63CE] shrink-0" />
                 <div>
-                  <span className="font-bold text-[#092B4C] block">24/7 Hospice Helpline</span>
-                  <a href={`tel:${siteConfig.contact.headOffice.mobile.replace(/\s+/g, "")}`}>
+                  <span className="font-bold text-[#0D3862] block">24/7 Hospice Helpline</span>
+                  <a
+                    href={`tel:${siteConfig.contact.headOffice.mobile.replace(/\s+/g, "")}`}
+                    className="text-[#0B63CE] font-bold hover:underline"
+                  >
                     {siteConfig.contact.headOffice.mobile}
                   </a>
                 </div>

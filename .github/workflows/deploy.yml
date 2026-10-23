@@ -1,4 +1,4 @@
-name: Production CI/CD - GHCR & CapRover
+name: Build and Deploy to CapRover
 
 on:
   push:
@@ -6,51 +6,44 @@ on:
       - main
   workflow_dispatch:
 
-# Minimum necessary permissions for repository checkout and publishing images to GHCR
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
 permissions:
   contents: read
   packages: write
 
-# Prevent overlapping production deployments from deploying older commits after newer ones
-concurrency:
-  group: production-deployment
-  cancel-in-progress: true
-
 jobs:
-  build-and-deploy:
-    name: Build Docker Image & Deploy to CapRover
+  deploy:
+    name: Build, Publish, and Deploy
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Validate Deployment Configuration
+      - name: Validate Required Secrets
         run: |
-          echo "Checking required CapRover deployment secrets..."
-          MISSING_SECRETS=()
-          if [ -z "${{ secrets.CAPROVER_SERVER }}" ]; then
-            MISSING_SECRETS+=("CAPROVER_SERVER")
-          fi
-          if [ -z "${{ secrets.CAPROVER_APP }}" ]; then
-            MISSING_SECRETS+=("CAPROVER_APP")
-          fi
-          if [ -z "${{ secrets.CAPROVER_APP_TOKEN }}" ]; then
-            MISSING_SECRETS+=("CAPROVER_APP_TOKEN")
-          fi
-
-          if [ ${#MISSING_SECRETS[@]} -ne 0 ]; then
-            echo "::error::Deployment halted! Missing required GitHub Secrets: ${MISSING_SECRETS[*]}"
-            echo "Please navigate to: Repository Settings -> Secrets and variables -> Actions, and add the required secrets."
+          MISSING=""
+          if [ -z "${{ secrets.CAPROVER_SERVER }}" ]; then MISSING="$MISSING CAPROVER_SERVER"; fi
+          if [ -z "${{ secrets.CAPROVER_APP }}" ]; then MISSING="$MISSING CAPROVER_APP"; fi
+          if [ -z "${{ secrets.CAPROVER_APP_TOKEN }}" ]; then MISSING="$MISSING CAPROVER_APP_TOKEN"; fi
+          if [ -n "$MISSING" ]; then
+            echo "::error::Missing required repository secret(s):$MISSING"
+            echo "Ensure CAPROVER_SERVER, CAPROVER_APP, and CAPROVER_APP_TOKEN are set in GitHub Secrets."
             exit 1
           fi
-          echo "All required deployment secrets are present."
 
-      - name: Prepare Lowercase Image Name
+      - name: Prepare Image Metadata
+        id: meta
         run: |
-          # Docker and GHCR repository names must be strictly lowercase
+          # GHCR requires image names to be lowercase
           LOWER_REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          echo "IMAGE_NAME=ghcr.io/${LOWER_REPO}" >> $GITHUB_ENV
+          IMAGE_URI="ghcr.io/${LOWER_REPO}"
+          echo "image_uri=${IMAGE_URI}" >> "$GITHUB_OUTPUT"
+          echo "image_tag_sha=${IMAGE_URI}:${{ github.sha }}" >> "$GITHUB_OUTPUT"
+          echo "image_tag_latest=${IMAGE_URI}:latest" >> "$GITHUB_OUTPUT"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -69,12 +62,10 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ env.IMAGE_NAME }}:latest
-            ${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ steps.meta.outputs.image_tag_sha }}
+            ${{ steps.meta.outputs.image_tag_latest }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL || '' }}
 
       - name: Deploy Image to CapRover
         uses: caprover/deploy-from-github@v1.1.2
@@ -82,4 +73,4 @@ jobs:
           server: ${{ secrets.CAPROVER_SERVER }}
           app: ${{ secrets.CAPROVER_APP }}
           token: ${{ secrets.CAPROVER_APP_TOKEN }}
-          image: ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          image: ${{ steps.meta.outputs.image_tag_sha }}

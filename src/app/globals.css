@@ -1,28 +1,28 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #1261A0;
-  --color-primary-dark: #092B4C;
-  --color-primary-light: #2585C6;
-  --color-accent-teal: #0D9488;
+  --color-primary: #0B63CE;
+  --color-primary-dark: #0A2540;
+  --color-primary-light: #38BDF8;
+  --color-accent-teal: #0284C7;
   --color-accent-gold: #F59E0B;
   --color-accent-gold-light: #FEF3C7;
-  --color-surface-alt: #F1F5F9;
-  --color-surface-soft: #F8FAFC;
-  --color-dark-text: #0F172A;
-  --color-muted-text: #64748B;
+  --color-surface-alt: #F0F7FD;
+  --color-surface-soft: #F8FAFD;
+  --color-dark-text: #0A2540;
+  --color-muted-text: #475569;
   
   --font-heading: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 :root {
-  --primary: #1261A0;
-  --primary-dark: #092B4C;
-  --accent-teal: #0D9488;
+  --primary: #0B63CE;
+  --primary-dark: #0A2540;
+  --accent-teal: #0284C7;
   --accent-gold: #F59E0B;
   --background: #FFFFFF;
-  --foreground: #0F172A;
+  --foreground: #0A2540;
 }
 
 html {
@@ -41,17 +41,17 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
 }
 
-/* ipm.lk style design tokens */
+/* Light blue medical tokens inspired by reference */
 .top-bar-ipm {
-  background: #092B4C;
-  color: #E2E8F0;
+  background: #F0F7FD;
+  color: #1E3A5F;
   font-size: 0.8125rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid #E1F0FD;
 }
 
 .badge-teal-ipm {
-  background: #E6FFFA;
-  color: #0D9488;
+  background: #EBF5FF;
+  color: #0B63CE;
   font-weight: 700;
   font-size: 0.75rem;
   letter-spacing: 0.04em;
@@ -61,7 +61,7 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  border: 1px solid rgba(13, 148, 136, 0.2);
+  border: 1px solid #BCE1FD;
 }
 
 .badge-gold-ipm {
@@ -80,36 +80,123 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .quote-highlight-ipm {
-  background: #F8FAFC;
-  border-left: 4px solid #0D9488;
+  background: #F0F7FD;
+  border-left: 4px solid #0B63CE;
   padding: 1.25rem 1.5rem;
   border-radius: 0 1rem 1rem 0;
   margin: 1.5rem 0;
 }
 
 .bank-card-ipm {
-  background: linear-gradient(135deg, #092B4C 0%, #1261A0 100%);
+  background: linear-gradient(135deg, #0B63CE 0%, #1E88E5 100%);
   color: #FFFFFF;
-  border-radius: 1.25rem;
+  border-radius: 1.5rem;
   padding: 2rem;
-  box-shadow: 0 20px 35px -10px rgba(9, 43, 76, 0.3);
+  box-shadow: 0 20px 35px -10px rgba(11, 99, 206, 0.3);
   position: relative;
   overflow: hidden;
 }
 
 .card-hover-ipm {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid #E2E8F0;
+  border: 1px solid #E2EEF9;
 }
 
 .card-hover-ipm:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 30px -10px rgba(18, 97, 160, 0.12);
+  box-shadow: 0 20px 30px -10px rgba(11, 99, 206, 0.12);
   border-color: #93C5FD;
 }
 
 /* Smooth Focus */
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-  outline: 2px solid #1261A0;
+  outline: 2px solid #0B63CE;
   outline-offset: 2px;
 }
+
+/* Reference-inspired Hero Keyframe Animations */
+@keyframes heroEyebrowAnim {
+  0% {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroHeadingAnim {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes heroSubtextAnim {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-eyebrow {
+  animation: heroEyebrowAnim 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-hero-heading {
+  animation: heroHeadingAnim 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.12s forwards;
+  opacity: 0;
+}
+
+.animate-hero-subtext {
+  animation: heroSubtextAnim 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+  opacity: 0;
+}
+
+.animate-hero-actions {
+  animation: heroSubtextAnim 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.38s forwards;
+  opacity: 0;
+}
+
+@keyframes heroImageAnim {
+  0% {
+    transform: scale(1.06);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(1.0);
+    opacity: 1;
+  }
+}
+
+.animate-hero-image {
+  animation: heroImageAnim 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+/* Continuous breathing opacity animation (adu wadi wena) */
+@keyframes pulseOpacityAnim {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.animate-pulse-opacity {
+  animation: pulseOpacityAnim 2.8s ease-in-out infinite;
+  will-change: opacity;
+}
+
+
+

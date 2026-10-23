@@ -20,6 +20,7 @@ import CallToAction from "@/components/shared/CallToAction";
 import { siteConfig } from "@/config/site";
 
 import InnerPageHero from "@/components/shared/InnerPageHero";
+import HospiceSubTabs from "@/components/shared/HospiceSubTabs";
 
 export const metadata: Metadata = {
   title: "Cancer Care Hospices | Free Inpatient & Community Sanctuaries",
@@ -39,6 +40,9 @@ export default function HospicesOverviewPage() {
         imageSrc="/images/hero-sanctuary.jpg"
         imageAlt="Cancer Care Hospice Sanctuary grounds and facilities"
       />
+
+      {/* Hospice Facility Sub-tabs */}
+      <HospiceSubTabs />
 
       {/* Philosophy of Hospice Care */}
       <section className="py-16 sm:py-20 bg-white">

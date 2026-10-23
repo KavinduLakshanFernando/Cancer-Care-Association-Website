@@ -20,6 +20,7 @@ import CallToAction from "@/components/shared/CallToAction";
 import { siteConfig } from "@/config/site";
 
 import InnerPageHero from "@/components/shared/InnerPageHero";
+import HospiceSubTabs from "@/components/shared/HospiceSubTabs";
 
 export const metadata: Metadata = {
   title: "Anuradhapura Cancer Care Hospice | 45-Bed WHO Recognized Facility",
@@ -43,6 +44,9 @@ export default function AnuradhapuraHospicePage() {
         imageSrc="/images/hero-ward.jpg"
         imageAlt="Modern comfortable inpatient care suite at Anuradhapura Hospice"
       />
+
+      {/* Hospice Facility Sub-tabs */}
+      <HospiceSubTabs />
 
       {/* Main Overview & Facility Background */}
       <section className="py-16 sm:py-20 bg-white">

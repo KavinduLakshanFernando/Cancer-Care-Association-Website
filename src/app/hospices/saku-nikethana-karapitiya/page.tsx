@@ -19,6 +19,7 @@ import SectionHeading from "@/components/shared/SectionHeading";
 import CallToAction from "@/components/shared/CallToAction";
 import { siteConfig } from "@/config/site";
 import InnerPageHero from "@/components/shared/InnerPageHero";
+import HospiceSubTabs from "@/components/shared/HospiceSubTabs";
 
 export const metadata: Metadata = {
   title: "Saku Nikethana Karapitiya | Cancer Care Association Galle",
@@ -42,6 +43,9 @@ export default function SakuNikethanaKarapitiyaPage() {
         imageSrc="/images/hero-community.jpg"
         imageAlt="Saku Nikethana transit shelter and patient care facility Galle"
       />
+
+      {/* Hospice Facility Sub-tabs */}
+      <HospiceSubTabs />
 
       {/* Main Narrative & Background */}
       <section className="py-16 sm:py-20 bg-white">
