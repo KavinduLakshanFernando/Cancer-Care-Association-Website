@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import MobileBottomNav from "./MobileBottomNav";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -589,62 +590,8 @@ Helpline: +94 77 340 9787`;
         )}
       </header>
 
-      {/* Sticky Mobile Bottom Navigation Bar - ipm.lk style */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-slate-200 py-2 px-3 shadow-lg flex items-center justify-around text-[10px] font-bold text-slate-600">
-        <Link
-          href="/"
-          className={cn(
-            "flex flex-col items-center gap-1",
-            pathname === "/" ? "text-[#1261A0]" : "hover:text-[#1261A0]"
-          )}
-        >
-          <HomeIcon className="w-4 h-4" />
-          <span>Home</span>
-        </Link>
-
-        <Link
-          href="/hospices"
-          className={cn(
-            "flex flex-col items-center gap-1",
-            isHospiceActive ? "text-[#1261A0]" : "hover:text-[#1261A0]"
-          )}
-        >
-          <Building className="w-4 h-4" />
-          <span>Hospices</span>
-        </Link>
-
-        <Link
-          href="/what-we-do"
-          className={cn(
-            "flex flex-col items-center gap-1",
-            pathname === "/what-we-do" ? "text-[#1261A0]" : "hover:text-[#1261A0]"
-          )}
-        >
-          <Activity className="w-4 h-4" />
-          <span>Services</span>
-        </Link>
-
-        <Link
-          href="/about"
-          className={cn(
-            "flex flex-col items-center gap-1",
-            pathname === "/about" ? "text-[#1261A0]" : "hover:text-[#1261A0]"
-          )}
-        >
-          <ShieldCheck className="w-4 h-4" />
-          <span>About</span>
-        </Link>
-
-        <Link
-          href="/donate"
-          className={cn(
-            "flex flex-col items-center gap-1 text-amber-600"
-          )}
-        >
-          <Heart className="w-4 h-4 fill-amber-500" />
-          <span>Donate</span>
-        </Link>
-      </div>
+      {/* Curved Cutout Mobile & Tablet Bottom Navigation Bar matching reference */}
+      <MobileBottomNav />
     </>
   );
 }
