@@ -173,7 +173,7 @@ export default function AboutPage() {
       </section>
 
       {/* Historical Milestones Timeline */}
-      <section className="py-16 sm:py-20 bg-white">
+      <section className="py-16 sm:py-20 bg-gradient-to-b from-white via-[#F8FAFD] to-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             badge="Two Decades of Impact"
@@ -181,82 +181,128 @@ export default function AboutPage() {
             subtitle="How a compassionate initiative blossomed into Sri Lanka's leading community palliative care association."
           />
 
-          <div className="mt-14 max-w-4xl mx-auto space-y-8 relative before:absolute before:inset-0 before:left-5 sm:before:left-1/2 before:w-0.5 before:bg-blue-100 before:-translate-x-1/2">
-            {/* 2003 */}
-            <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 group">
-              <div className="sm:w-5/12 text-left sm:text-right space-y-1">
-                <span className="text-xs font-bold uppercase text-[#1261A0] tracking-wider">
-                  Foundation
-                </span>
-                <h4 className="text-lg font-bold text-[#092B4C]">Inception in Anuradhapura</h4>
-                <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
-                  Founded by Dr. Samadhi W. Rajapaksa with local volunteers to assist needy
-                  oncology patients at the Anuradhapura hospital.
-                </p>
-              </div>
-              <div className="w-10 h-10 rounded-full bg-[#1261A0] text-white flex items-center justify-center font-bold text-xs shadow-md shrink-0 z-10 mx-auto">
-                2003
-              </div>
-              <div className="sm:w-5/12 hidden sm:block" />
-            </div>
+          <div className="mt-12 sm:mt-16 max-w-4xl mx-auto relative">
+            {/* Timeline Continuous Track Line */}
+            <div
+              className="absolute top-6 bottom-6 left-6 md:left-1/2 -translate-x-1/2 w-0.5 bg-gradient-to-b from-[#0B63CE] via-[#38BDF8] to-[#0B63CE]/30"
+              aria-hidden="true"
+            />
 
-            {/* 2011 */}
-            <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 group">
-              <div className="sm:w-5/12 hidden sm:block" />
-              <div className="w-10 h-10 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-xs shadow-md shrink-0 z-10 mx-auto">
-                2011
-              </div>
-              <div className="sm:w-5/12 space-y-1">
-                <span className="text-xs font-bold uppercase text-teal-700 tracking-wider">
-                  Major Facilities
-                </span>
-                <h4 className="text-lg font-bold text-[#092B4C]">
-                  Hospice Phase I & Galle Branch
-                </h4>
-                <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
-                  June 2011: Opened the 20-bed Anuradhapura Hospice in Kurundankulama.
-                  August 2011: Established Karapitiya branch at Teaching Hospital Karapitiya.
-                </p>
-              </div>
-            </div>
+            <div className="space-y-8 sm:space-y-12">
+              {/* Milestone 1: 2003 */}
+              <div className="relative flex flex-col md:flex-row items-start md:items-center group">
+                {/* Center Node */}
+                <div className="absolute left-6 md:left-1/2 -translate-x-1/2 top-5 md:top-1/2 md:-translate-y-1/2 w-11 h-11 rounded-2xl bg-gradient-to-br from-[#0B63CE] to-[#1E88E5] text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/25 border-2 border-white z-10 shrink-0 group-hover:scale-110 transition-transform duration-200">
+                  2003
+                </div>
 
-            {/* 2014 */}
-            <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 group">
-              <div className="sm:w-5/12 text-left sm:text-right space-y-1">
-                <span className="text-xs font-bold uppercase text-[#1261A0] tracking-wider">
-                  Expansion & Recognition
-                </span>
-                <h4 className="text-lg font-bold text-[#092B4C]">
-                  WHO Recognition & 45-Bed Capacity
-                </h4>
-                <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
-                  Completion of Phase II brought hospice capacity to 45 beds. The World Health
-                  Organization (WHO) recognized the facility and donated 22 specialized hospital beds.
-                </p>
-              </div>
-              <div className="w-10 h-10 rounded-full bg-[#1261A0] text-white flex items-center justify-center font-bold text-xs shadow-md shrink-0 z-10 mx-auto">
-                2014
-              </div>
-              <div className="sm:w-5/12 hidden sm:block" />
-            </div>
+                {/* Left Card on Desktop / Right on Mobile */}
+                <div className="ml-14 sm:ml-16 md:ml-0 md:mr-auto md:w-[calc(50%-3rem)] w-[calc(100%-3.5rem)] sm:w-[calc(100%-4rem)]">
+                  <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#DCEAF8] shadow-xs hover:shadow-md hover:border-[#0B63CE]/40 transition-all md:text-right">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-[#0B63CE] bg-[#F0F7FD] border border-[#BCE1FD]">
+                      Foundation
+                    </span>
+                    <h4 className="text-base sm:text-lg font-bold text-[#0D3862] mt-2">
+                      Inception in Anuradhapura
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1.5">
+                      Founded by Dr. Samadhi W. Rajapaksa with local volunteers to assist needy oncology patients at the Anuradhapura hospital.
+                    </p>
+                    <div className="mt-3 pt-3 border-t border-slate-100 flex items-center md:justify-end text-xs font-semibold text-slate-500">
+                      <span>Anuradhapura Oncology Ward</span>
+                    </div>
+                  </div>
+                </div>
 
-            {/* Present */}
-            <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 group">
-              <div className="sm:w-5/12 hidden sm:block" />
-              <div className="w-10 h-10 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-xs shadow-md shrink-0 z-10 mx-auto">
-                Today
+                {/* Right Spacer for Desktop */}
+                <div className="hidden md:block md:w-[calc(50%-3rem)]" />
               </div>
-              <div className="sm:w-5/12 space-y-1">
-                <span className="text-xs font-bold uppercase text-teal-700 tracking-wider">
-                  National Outreach
-                </span>
-                <h4 className="text-lg font-bold text-[#092B4C]">
-                  Home Palliative Care & Saku Nikethana
-                </h4>
-                <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
-                  Mobilizing home visits across multiple provinces, operating Saku Nikethana
-                  outpatient family shelter in Galle, and driving nationwide awareness campaigns.
-                </p>
+
+              {/* Milestone 2: 2011 */}
+              <div className="relative flex flex-col md:flex-row items-start md:items-center group">
+                {/* Center Node */}
+                <div className="absolute left-6 md:left-1/2 -translate-x-1/2 top-5 md:top-1/2 md:-translate-y-1/2 w-11 h-11 rounded-2xl bg-gradient-to-br from-[#0B63CE] to-[#1E88E5] text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/25 border-2 border-white z-10 shrink-0 group-hover:scale-110 transition-transform duration-200">
+                  2011
+                </div>
+
+                {/* Left Spacer for Desktop */}
+                <div className="hidden md:block md:w-[calc(50%-3rem)]" />
+
+                {/* Right Card */}
+                <div className="ml-14 sm:ml-16 md:ml-auto md:w-[calc(50%-3rem)] w-[calc(100%-3.5rem)] sm:w-[calc(100%-4rem)]">
+                  <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#DCEAF8] shadow-xs hover:shadow-md hover:border-[#0B63CE]/40 transition-all text-left">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-sky-700 bg-sky-50 border border-sky-200">
+                      Major Facilities
+                    </span>
+                    <h4 className="text-base sm:text-lg font-bold text-[#0D3862] mt-2">
+                      Hospice Phase I &amp; Galle Branch
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1.5">
+                      June 2011: Opened the 20-bed Anuradhapura Hospice in Kurundankulama. August 2011: Established Karapitiya branch at Teaching Hospital Karapitiya.
+                    </p>
+                    <div className="mt-3 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-slate-500">
+                      <span>Kurundankulama &amp; Karapitiya Galle</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Milestone 3: 2014 */}
+              <div className="relative flex flex-col md:flex-row items-start md:items-center group">
+                {/* Center Node */}
+                <div className="absolute left-6 md:left-1/2 -translate-x-1/2 top-5 md:top-1/2 md:-translate-y-1/2 w-11 h-11 rounded-2xl bg-gradient-to-br from-[#0B63CE] to-[#1E88E5] text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/25 border-2 border-white z-10 shrink-0 group-hover:scale-110 transition-transform duration-200">
+                  2014
+                </div>
+
+                {/* Left Card on Desktop / Right on Mobile */}
+                <div className="ml-14 sm:ml-16 md:ml-0 md:mr-auto md:w-[calc(50%-3rem)] w-[calc(100%-3.5rem)] sm:w-[calc(100%-4rem)]">
+                  <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#DCEAF8] shadow-xs hover:shadow-md hover:border-[#0B63CE]/40 transition-all md:text-right">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-[#0B63CE] bg-[#F0F7FD] border border-[#BCE1FD]">
+                      Expansion &amp; Recognition
+                    </span>
+                    <h4 className="text-base sm:text-lg font-bold text-[#0D3862] mt-2">
+                      WHO Recognition &amp; 45-Bed Capacity
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1.5">
+                      Completion of Phase II brought hospice capacity to 45 beds. The World Health Organization (WHO) recognized the facility and donated 22 specialized hospital beds.
+                    </p>
+                    <div className="mt-3 pt-3 border-t border-slate-100 flex items-center md:justify-end text-xs font-semibold text-slate-500">
+                      <span>45 Inpatient Beds • WHO Endorsed</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Spacer for Desktop */}
+                <div className="hidden md:block md:w-[calc(50%-3rem)]" />
+              </div>
+
+              {/* Milestone 4: Today */}
+              <div className="relative flex flex-col md:flex-row items-start md:items-center group">
+                {/* Center Node */}
+                <div className="absolute left-6 md:left-1/2 -translate-x-1/2 top-5 md:top-1/2 md:-translate-y-1/2 w-11 h-11 rounded-2xl bg-gradient-to-br from-[#0B63CE] to-[#1E88E5] text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/25 border-2 border-white z-10 shrink-0 group-hover:scale-110 transition-transform duration-200">
+                  Today
+                </div>
+
+                {/* Left Spacer for Desktop */}
+                <div className="hidden md:block md:w-[calc(50%-3rem)]" />
+
+                {/* Right Card */}
+                <div className="ml-14 sm:ml-16 md:ml-auto md:w-[calc(50%-3rem)] w-[calc(100%-3.5rem)] sm:w-[calc(100%-4rem)]">
+                  <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#DCEAF8] shadow-xs hover:shadow-md hover:border-[#0B63CE]/40 transition-all text-left">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-sky-700 bg-sky-50 border border-sky-200">
+                      National Outreach
+                    </span>
+                    <h4 className="text-base sm:text-lg font-bold text-[#0D3862] mt-2">
+                      Home Palliative Care &amp; Saku Nikethana
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1.5">
+                      Mobilizing home visits across multiple provinces, operating Saku Nikethana outpatient family shelter in Galle, and driving nationwide awareness campaigns.
+                    </p>
+                    <div className="mt-3 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-slate-500">
+                      <span>Island-wide Mobile Care &amp; Transit Shelter</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
