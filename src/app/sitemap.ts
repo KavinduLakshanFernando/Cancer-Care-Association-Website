@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/hospices/anuradhapura",
     "/hospices/saku-nikethana-karapitiya",
     "/home-based-palliative-care",
+    "/gallery",
     "/what-we-do",
     "/donate",
     "/contact",

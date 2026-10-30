@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Heart,
@@ -20,6 +21,7 @@ import {
   HeartHandshake,
   BookOpen,
   Globe,
+  ExternalLink,
 } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -107,11 +109,6 @@ Helpline: +94 77 340 9787`;
               >
                 {siteConfig.contact.headOffice.mobile}
               </a>
-            </div>
-            <span className="text-slate-300">•</span>
-            <div className="flex items-center gap-1.5 text-slate-600">
-              <MapPin className="w-3.5 h-3.5 text-teal-600" />
-              <span>Anuradhapura &amp; Galle Hospices, Sri Lanka</span>
             </div>
             <span className="text-slate-300">•</span>
             <div className="inline-flex items-center gap-1 text-[#0B63CE] font-bold">
@@ -241,7 +238,7 @@ Helpline: +94 77 340 9787`;
 
               {hospiceDropdownOpen && (
                 <div
-                  className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-84 z-50 animate-in fade-in slide-in-from-top-1 duration-150"
+                  className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-[360px] z-50 animate-in fade-in slide-in-from-top-1 duration-150"
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
@@ -375,6 +372,38 @@ Helpline: +94 77 340 9787`;
                           </p>
                         </div>
                       </Link>
+
+                      <a
+                        href="https://ipm.lk"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setHospiceDropdownOpen(false)}
+                        className="flex items-start gap-3 p-2.5 rounded-xl transition-all group hover:bg-[#F0FDF4] text-[#0D3862] border border-transparent hover:border-emerald-200"
+                      >
+                        <div className="relative w-8 h-8 rounded-lg overflow-hidden shrink-0 border border-emerald-700/25 shadow-xs">
+                          <Image
+                            src="/images/ipm-logo.jpg"
+                            alt="Institute of Palliative Medicine (IPM)"
+                            fill
+                            sizes="32px"
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-1.5">
+                            <span className="text-sm font-bold text-[#0D3862] group-hover:text-emerald-700 transition-colors">
+                              Institute of Palliative Medicine
+                            </span>
+                            <span className="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded font-bold shrink-0 inline-flex items-center gap-1">
+                              <span>ipm.lk</span>
+                              <ExternalLink className="w-2.5 h-2.5" />
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-500 mt-0.5">
+                            Academic &amp; palliative research portal.
+                          </p>
+                        </div>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -392,6 +421,19 @@ Helpline: +94 77 340 9787`;
               )}
             >
               Home Care
+            </Link>
+
+            {/* Events */}
+            <Link
+              href="/gallery"
+              className={cn(
+                "relative px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 select-none",
+                pathname === "/gallery" || pathname.startsWith("/gallery/")
+                  ? "bg-white text-[#0B63CE] font-bold shadow-[0_2px_8px_rgba(11,99,206,0.12),0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)] border border-[#CDE3F7]"
+                  : "text-[#1E3A5F] hover:text-[#0B63CE] hover:bg-white/70"
+              )}
+            >
+              Gallery
             </Link>
 
             {/* Contact */}
@@ -527,6 +569,33 @@ Helpline: +94 77 340 9787`;
                       Galle
                     </span>
                   </Link>
+
+                  <a
+                    href="https://ipm.lk"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-emerald-50 transition-colors group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="relative w-5 h-5 rounded-md overflow-hidden shrink-0 border border-emerald-600/30">
+                        <Image
+                          src="/images/ipm-logo.jpg"
+                          alt="Institute of Palliative Medicine"
+                          fill
+                          sizes="20px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <span className="group-hover:text-emerald-700 font-bold text-xs sm:text-sm">
+                        Institute of Palliative Medicine
+                      </span>
+                    </div>
+                    <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold inline-flex items-center gap-1">
+                      <span>ipm.lk</span>
+                      <ExternalLink className="w-2.5 h-2.5" />
+                    </span>
+                  </a>
                 </div>
               </div>
               <Link
@@ -539,6 +608,17 @@ Helpline: +94 77 340 9787`;
                 )}
               >
                 Home-Based Palliative Care
+              </Link>
+              <Link
+                href="/gallery"
+                className={cn(
+                  "block px-4 py-2.5 rounded-xl text-base font-bold transition-colors",
+                  pathname === "/gallery" || pathname.startsWith("/gallery/")
+                    ? "bg-[#EBF5FF] text-[#0B63CE]"
+                    : "text-[#0D3862] hover:bg-slate-50"
+                )}
+              >
+                Gallery
               </Link>
               <Link
                 href="/donate"

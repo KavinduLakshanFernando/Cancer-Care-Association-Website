@@ -1,11 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Building, Home as HomeIcon, Activity, ChevronRight } from "lucide-react";
+import { Building, Home as HomeIcon, Activity, ChevronRight, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const tabs = [
+interface TabItem {
+  name: string;
+  href: string;
+  icon?: typeof Building;
+  logo?: string;
+  badge: string;
+  isExternal?: boolean;
+}
+
+const tabs: TabItem[] = [
   {
     name: "Hospices Overview",
     href: "/hospices",
@@ -23,6 +33,13 @@ const tabs = [
     href: "/hospices/saku-nikethana-karapitiya",
     icon: Activity,
     badge: "Galle Outpatient Shelter",
+  },
+  {
+    name: "Institute of Palliative Medicine",
+    href: "https://ipm.lk",
+    logo: "/images/ipm-logo.jpg",
+    badge: "ipm.lk",
+    isExternal: true,
   },
 ];
 
@@ -46,6 +63,35 @@ export default function HospiceSubTabs() {
               const Icon = tab.icon;
               const isActive = pathname === tab.href;
 
+              if (tab.isExternal) {
+                return (
+                  <a
+                    key={tab.href}
+                    href={tab.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold text-[#1E3A5F] hover:text-emerald-700 hover:bg-white/80 transition-all shrink-0 select-none group border border-transparent hover:border-emerald-200"
+                  >
+                    {tab.logo ? (
+                      <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0 border border-emerald-600/30">
+                        <Image
+                          src={tab.logo}
+                          alt={tab.name}
+                          fill
+                          sizes="16px"
+                          className="object-cover"
+                        />
+                      </div>
+                    ) : null}
+                    <span>{tab.name}</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 inline-flex items-center gap-0.5">
+                      <span>{tab.badge}</span>
+                      <ExternalLink className="w-2.5 h-2.5" />
+                    </span>
+                  </a>
+                );
+              }
+
               return (
                 <Link
                   key={tab.href}
@@ -57,12 +103,14 @@ export default function HospiceSubTabs() {
                       : "text-[#1E3A5F] hover:text-[#0B63CE] hover:bg-white/70"
                   )}
                 >
-                  <Icon
-                    className={cn(
-                      "w-4 h-4 shrink-0 transition-colors",
-                      isActive ? "text-[#0B63CE]" : "text-slate-400"
-                    )}
-                  />
+                  {Icon && (
+                    <Icon
+                      className={cn(
+                        "w-4 h-4 shrink-0 transition-colors",
+                        isActive ? "text-[#0B63CE]" : "text-slate-400"
+                      )}
+                    />
+                  )}
                   <span>{tab.name}</span>
                   <span
                     className={cn(

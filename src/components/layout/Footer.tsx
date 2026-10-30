@@ -13,6 +13,7 @@ import {
   Check,
   HeartHandshake,
   Clock,
+  ExternalLink,
 } from "lucide-react";
 import { siteConfig } from "@/config/site";
 
@@ -138,6 +139,11 @@ Helpline: +94 77 340 9787`;
                 </Link>
               </li>
               <li>
+                <Link href="/gallery" className="text-slate-600 hover:text-blue-600 transition block py-0.5">
+                  Gallery
+                </Link>
+              </li>
+              <li>
                 <Link href="/donate" className="text-blue-600 hover:underline font-bold block py-0.5">
                   How to Donate
                 </Link>
@@ -195,6 +201,25 @@ Helpline: +94 77 340 9787`;
                   <Phone className="w-3.5 h-3.5 shrink-0" />
                   <span className="whitespace-nowrap">+94 77 569 6000</span>
                 </a>
+              </div>
+
+              {/* Institute of Palliative Medicine */}
+              <div className="pt-2 border-t border-sky-100">
+                <a
+                  href="https://ipm.lk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold text-slate-900 hover:text-emerald-700 transition flex items-center justify-between group"
+                >
+                  <span>Institute of Palliative Medicine</span>
+                  <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold shrink-0 inline-flex items-center gap-0.5">
+                    <span>ipm.lk</span>
+                    <ExternalLink className="w-2.5 h-2.5" />
+                  </span>
+                </a>
+                <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-snug">
+                  Academic &amp; Research Portal (IPM)
+                </p>
               </div>
 
               <div className="pt-1.5">
